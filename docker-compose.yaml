@@ -1,0 +1,22 @@
+version: '1.0'
+services:
+  ollama:
+    container_name: ollama
+    pull_policy: always
+    build: .
+    ports:
+      - "8888:8888"
+      - "11434:11434"
+      - "80:3000"
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    volumes:
+      - ./contents:/workspace/contents
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+              
